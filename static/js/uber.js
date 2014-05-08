@@ -276,7 +276,7 @@ var AppView = Backbone.View.extend({
 	render: function(){
 		var locations_view = new LocationsView();
 		locations_view.render();
-		console.log("Started the app");
+		console.log("Started the app on Heroku");
 		$(".add-location").on("click", this.add_locations_view);
 
 		return this;
