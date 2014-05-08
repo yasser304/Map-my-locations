@@ -1,0 +1,50 @@
+html, body, #map-canvas {
+    height: 100%;
+    margin: 0px;
+    padding: 0px
+}
+
+.navbar-header{
+	float: none;
+	text-align: center;
+}
+.navbar-header h3{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-weight: normal;
+	color: #CCC;
+}
+.navbar-default{
+	background-image: none;
+	background-color: rgba(0, 0, 0, 0.5);
+	border-bottom: 1px solid #adadad;
+}
+.container{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.btn-area{
+	visibility: hidden;
+	float: right;
+}
+
+.panel-body:hover .btn-area{
+	visibility: visible;
+}
+
+.panel-coord{
+	color:#545454;
+}
+
+.add-location-dialog{
+	margin-top: 20px;
+}
+
+.error-div{
+	text-align: center;
+	margin-top:60px;
+}
+
+
+
+
