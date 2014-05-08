@@ -11,7 +11,7 @@
 	function showAlert(m, t, a, context){
 		var message = m;
 		var warning = new AlertView().render(m,t, a).el;
-		$("#error-area").append(warning);
+		$("#error-area").html(warning);
 		setTimeout(function() { warning.remove(); }, 3000);
 	}
 
@@ -227,7 +227,7 @@ var LocationsAddView = Backbone.View.extend({
 								$(".add-location-dialog").remove();
 								add_location.set("uri", response.locations.uri);
 								add_location.set("created", response.locations.created) ;
-								add_location.set("id", response.locations.uri.substring(49));
+								add_location.set("id", response.locations.id;
 								var locations_item = new LocationsItemView({model: add_location}).render().el;
 								$(".locations").prepend(locations_item);
 								GoogleMapView.plot(add_location);
