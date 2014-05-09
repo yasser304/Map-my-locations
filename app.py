@@ -7,7 +7,6 @@ from flask import Flask, jsonify, abort, make_response, request, url_for, render
 # configuration
 #----------------------------------------
 app = Flask(__name__)
-app.config["SECRET_KEY"] = '\x11E\xa3\xdf`"\x07\x91\xd0\xe6AE\xe6\x8d\x90\x99wx\xb97\r\xf1Cr'
 
 #----------------------------------------
 # database
@@ -15,10 +14,10 @@ app.config["SECRET_KEY"] = '\x11E\xa3\xdf`"\x07\x91\xd0\xe6AE\xe6\x8d\x90\x99wx\
 from mongoengine import *
 from flask.ext.mongoengine import MongoEngine
 
-DB_NAME = "ubercc"
-DB_USERNAME = "ubercc"
-DB_PASSWORD = "pro098!"
-DB_HOST_ADDRESS = "ds029630.mongolab.com:29630/ubercc"
+DB_NAME = "*****"
+DB_USERNAME = "*****"
+DB_PASSWORD = "*****"
+DB_HOST_ADDRESS = "****mongolab*****"
 
 app.config["MONGODB_DB"] = DB_NAME
 connect(DB_NAME, host='mongodb://' + DB_USERNAME + ':' + DB_PASSWORD + '@' + DB_HOST_ADDRESS)
