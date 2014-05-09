@@ -67,19 +67,23 @@
 		delete: function(){
 			var that = this;
 			console.log("destroying"+ this.model.get("name"));
-			this.model.destroy({
-				wait: true,
-				success: function(model, response){
-					GoogleMapView.locations.remove(model);
-					model.get("marker").setMap(null);
-					showAlert("That location will surely be missed...", "success", "Alas! ", that);
-					console.log("destroyed");
-					that.close();
-				},
-				error: function(){
-					showAlert("Oops...something went wrong. Please try again", "danger", "Error! ", that);
-				}
+			this.$el.slideUp(650, function(){
+				console.log("I am fading....!")
+				that.model.destroy({
+					wait: true,
+					success: function(model, response){
+						GoogleMapView.locations.remove(model);
+						model.get("marker").setMap(null);
+						showAlert("That location will surely be missed...", "success", "Alas! ", that);
+						console.log("destroyed");
+						that.close();
+					},
+					error: function(){
+						showAlert("Oops...something went wrong. Please try again", "danger", "Error! ", that);
+					}
+				});
 			});
+			
 		},
 		render: function(){
 			var template = _.template($("#locations_template").html(), {location: this.model});
@@ -185,11 +189,16 @@ var LocationsAddView = Backbone.View.extend({
 		var that = this;
 		var template = _.template($("#add_locations_template").html());
 		$(el).append(template);
+
 		return this;
 	},
 
 	destroy: function(){
-		$(".add-location-dialog").remove();
+		$(".add-location-dialog").slideUp(650, function(){
+			$(".add-location-dialog").remove();
+		});
+		
+		$('.add-location').attr("disabled", false);
 	},
 
 	save: function(){
@@ -224,14 +233,17 @@ var LocationsAddView = Backbone.View.extend({
 						add_location.set("name" , name);
 						add_location.save(null, {
 							success: function (model, response) {
-								$(".add-location-dialog").remove();
+								$(".add-location-dialog").slideUp(650, function(){
+									console.log("I am fading....!")
+									$(".add-location-dialog").remove();
+								});
 								add_location.set("uri", response.locations.uri);
 								add_location.set("created", response.locations.created) ;
 								add_location.set("id", response.locations.id);
 								var locations_item = new LocationsItemView({model: add_location}).render().el;
 								$(".locations").prepend(locations_item);
 								GoogleMapView.plot(add_location);
-								
+								$('.add-location').attr("disabled", false);
 								showAlert("You just added a new location!", "success", "Awesome! ", that);
 							},
 							error: function (model, response) {
@@ -278,7 +290,6 @@ var AppView = Backbone.View.extend({
 		locations_view.render();
 		console.log("Started the app on Heroku");
 		$(".add-location").on("click", this.add_locations_view);
-
 		return this;
 	},
 
@@ -287,6 +298,7 @@ var AppView = Backbone.View.extend({
 		console.log("Creating a new location");
 		var inst = LocationsAddView.getInstance();
 		inst.render(".add-button");
+		$(this).attr("disabled", true);
 	}
 });
 

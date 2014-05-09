@@ -10,68 +10,68 @@
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="navbar-header">
-       <h3>Uber Code Challenge</h3>
-    </div>
-  </nav>
-  <nav id="error-area" class="navbar-fixed-top" role="navigation">
-  </nav>
-  <div id="map-canvas"></div>
-    <div id="add-button" class="container add-button">
-    <button type="button" class="btn btn-default add-location">
-      <span class="glyphicon glyphicon-plus"></span> Add a location
-    </button>
-  </div>
-  <div id="main" class="container locations">
+    <div class="navbar-header">
+     <h3>Uber Code Challenge</h3>
+   </div>
+ </nav>
+ <nav id="error-area" class="navbar-fixed-top" role="navigation">
+ </nav>
+ <div id="map-canvas"></div>
+ <div id="add-button" class="container add-button">
+  <button type="button" class="btn btn-default add-location my-btn">
+    <span class="glyphicon glyphicon-plus"></span> Add a location
+  </button>
+</div>
+<div id="main" class="container locations">
   <!-- <h2>Add a locations and let the fun begin!</h2> -->
-  </div>
-  </div>
-  
+</div>
+</div>
+
 </body>
 
 <script type="text/template" id="locations_template">
   <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title"><%=location.get("name") %></h3>
-      </div>
-      <div class="panel-body">
-        <span class="panel-coord"><%=location.get("lat") %> , <%=location.get("lng") %></span><br>
-        <span class="panel-address"><%=location.get("address") %></span>
-        <span class="btn-area">
-          <button class="btn edit-btn">Edit</button>
-          <button class="btn delete-btn">Delete</button>
-        </span>
-      </div>
+    <div class="panel-heading">
+      <h3 class="panel-title"><%=location.get("name") %></h3>
     </div>
+    <div class="panel-body">
+      <span class="panel-coord"><%=location.get("lat") %> , <%=location.get("lng") %></span><br>
+      <span class="panel-address"><%=location.get("address") %></span>
+      <span class="btn-area">
+      <button class="btn btn-default edit-btn my-btn my-btn-panel">Edit</button>
+        <button class="btn btn-default delete-btn my-btn my-btn-panel">Delete</button>
+      </span>
+    </div>
+  </div>
 </script>
 
 <script type="text/template" id="add_locations_template">
   <div class="panel panel-primary add-location-dialog">
-      <div class="panel-heading">
-        <div class="input-group">
-          <span class="input-group-addon">Name</span>
-          <input id="location-name" type="text" class="form-control" placeholder="What do you want to call this place?">
-        </div>
-      </div>
-      <div class="panel-body">
-        <div class="input-group">
-          <span class="input-group-addon">Address</span>
-          <input id="location-address" type="text" class="form-control" placeholder="Where is this place located?">
-        </div>
-        <div class="save-btn-area">
-          <button class="btn save-btn">Save</button>
-          <button class="btn cancel-btn">Cancel</button>
-        </div>
+    <div class="panel-heading">
+      <div class="input-group">
+        <span class="input-group-addon">Name</span>
+        <input id="location-name" type="text" class="form-control" placeholder="What do you want to call this place?">
       </div>
     </div>
+    <div class="panel-body">
+      <div class="input-group">
+        <span class="input-group-addon">Address</span>
+        <input id="location-address" type="text" class="form-control" placeholder="Where is this place located?">
+      </div>
+      <div class="save-btn-area">
+        <button class="btn btn-default save-btn my-btn my-btn-panel">Save</button>
+        <button class="btn btn-default cancel-btn my-btn my-btn-panel">Cancel</button>
+      </div>
+    </div>
+  </div>
 </script>
 
 <script type="text/template" id="error_template">
- 
+
   <div class= "alert alert-dismissable error-div" >
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-  <strong><%= alert %></strong><%= message %>
-</div>
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong><%= alert %></strong><%= message %>
+  </div>
 
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
