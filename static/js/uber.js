@@ -8,7 +8,7 @@
 		this.unbind();
 	};
 
-	function showAlert(m, t, a, context){
+	function showAlert(m, t, a){
 		var message = m;
 		var warning = new AlertView().render(m,t, a).el;
 		$("#error-area").html(warning);
@@ -53,33 +53,28 @@
 			"click .cancel-btn": "revert"
 		},
 		edit: function(){
-			console.log("Editing...");
 			var that =this;
 			var template = _.template($("#add_locations_template").html(), {location: this.model});
 			this.$el.html(template);
 			this.$("#location-name").val(this.model.get("name"));
 			this.$("#location-address").val(this.model.get("address"));
 			$(".add-button").on("click", function(){
-				console.log("Reverting");
 				that.revert();
 			});
 		},
 		delete: function(){
 			var that = this;
-			console.log("destroying"+ this.model.get("name"));
 			this.$el.slideUp(650, function(){
-				console.log("I am fading....!")
 				that.model.destroy({
 					wait: true,
 					success: function(model, response){
 						GoogleMapView.locations.remove(model);
 						model.get("marker").setMap(null);
-						showAlert("That location will surely be missed...", "success", "Alas! ", that);
-						console.log("destroyed");
+						showAlert("That location will surely be missed...", "success", "Alas! ");
 						that.close();
 					},
 					error: function(){
-						showAlert("Oops...something went wrong. Please try again", "danger", "Error! ", that);
+						showAlert("Oops...something went wrong. Please try again", "danger", "Error! ");
 					}
 				});
 			});
@@ -91,12 +86,11 @@
 			return this;
 		},
 		save: function(){
-			console.log("saving");
 			var that = this;
 			var name = $("#location-name").val();
 			var address = $("#location-address").val();
 			if( name === "" || address === ""){
-				showAlert("Please enter both fields!", "warning", "Sorry! ", that);
+				showAlert("Please enter both fields!", "warning", "Sorry! ");
 				return;
 			}
 			var current_location = this.model;
@@ -113,8 +107,7 @@
 					dataType: "json",
 					success: function (data) {
 					if(data.results.length > 1){
-							console.log("please be more specific");
-							showAlert("Your will have to be a bit more specific!", "warning", "Sorry! ", that);
+							showAlert("Your will have to be a bit more specific!", "warning", "Sorry! ");
 					}else{
 						current_location.set("name", name);
 						current_location.set("address", data.results[0].formatted_address);
@@ -125,21 +118,19 @@
 						current_location.save(null, {
 							success: function(model, response){
 								that.model = model;
-								console.log("Updated!");
 								that.render();
 								GoogleMapView.plot(that.model);
 								GoogleMapView.recenter();
-								showAlert("That location has been updated", "success", "Done! ", that);
+								showAlert("That location has been updated", "success", "Done! ");
 							},
 							error: function(model, response){
-								console.log("error");
-								showAlert("Oops...something went wrong. Please try again", "danger", "Error! ", that);
+								showAlert("Oops...something went wrong. Please try again", "danger", "Error! ");
 							}
 						});
 					}
 				},
 				error: function (data) {
-					showAlert("Oops...something went wrong. Please try again", "danger", "Error! ", that);	
+					showAlert("Oops...something went wrong. Please try again", "danger", "Error! ");	
 				}
 			});
 			}
@@ -168,7 +159,7 @@ var LocationsView = Backbone.View.extend({
 
 			},
 			error: function(){
-				console.log("ERROR");
+				showAlert("Oops...something went wrong. Please try again", "danger", "Error! ");
 			}
 		});
 
@@ -202,12 +193,11 @@ var LocationsAddView = Backbone.View.extend({
 	},
 
 	save: function(){
-		console.log("Saving...");
 		var that = this;
 		var name = $("#location-name").val();
 		var address = $("#location-address").val();
 		if( name === "" || address === ""){
-			showAlert("Please enter both fields!", "warning", "Sorry! ", that);
+			showAlert("Please enter both fields!", "warning", "Sorry! ");
 			return;
 		}
 		var jqXHR = $.ajax({
@@ -219,11 +209,10 @@ var LocationsAddView = Backbone.View.extend({
 			dataType: "json",
 			success: function (data) {
 				if(data.results.length > 1){
-					console.log("please be more specific");
 					if(data.status === "ZERO_RESULTS"){
-						showAlert("Thats not a valid address", "warning", "Sorry! ", that);
+						showAlert("Thats not a valid address", "warning", "Sorry! ");
 					}else{
-						showAlert("Your will have to be a bit more specific!", "warning", "Sorry! ", that);
+						showAlert("Your will have to be a bit more specific!", "warning", "Sorry! ");
 					}
 					}else{
 						var add_location = new Location();
@@ -234,7 +223,6 @@ var LocationsAddView = Backbone.View.extend({
 						add_location.save(null, {
 							success: function (model, response) {
 								$(".add-location-dialog").slideUp(650, function(){
-									console.log("I am fading....!")
 									$(".add-location-dialog").remove();
 								});
 								add_location.set("uri", response.locations.uri);
@@ -244,19 +232,17 @@ var LocationsAddView = Backbone.View.extend({
 								$(".locations").prepend(locations_item);
 								GoogleMapView.plot(add_location);
 								$('.add-location').attr("disabled", false);
-								showAlert("You just added a new location!", "success", "Awesome! ", that);
+								showAlert("You just added a new location!", "success", "Awesome! ");
 							},
 							error: function (model, response) {
-								console.log("error");
-									showAlert("Oops...something went wrong. Please try again", "danger", "Error! ", that);
+									showAlert("Oops...something went wrong. Please try again", "danger", "Error! ");
 								}
 							});
 					}
 
 				},
 				error: function (data) {
-					console.log("error in gecoding");
-					showAlert("Oops...something went wrong. Please try again", "danger", "Error! ", that);
+					showAlert("Oops...something went wrong. Please try again", "danger", "Error! ");
 				}
 			});
 
@@ -288,14 +274,12 @@ var AppView = Backbone.View.extend({
 	render: function(){
 		var locations_view = new LocationsView();
 		locations_view.render();
-		console.log("Started the app on Heroku");
 		$(".add-location").on("click", this.add_locations_view);
 		return this;
 	},
 
 	add_locations_view: function(){
 		$('html,body').animate({scrollTop: $(".add-button").offset().top},'slow');
-		console.log("Creating a new location");
 		var inst = LocationsAddView.getInstance();
 		inst.render(".add-button");
 		$(this).attr("disabled", true);
