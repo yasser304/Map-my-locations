@@ -1,4 +1,4 @@
-uber-cc
+Map-my-locations
 =======
 A simple locations storing application using Flask and MongoEngine deployed on Heroku.
 The Flask code describes the API used to persist data onto the MongoDB instance using MongoEngine.
